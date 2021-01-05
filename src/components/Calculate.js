@@ -26,7 +26,7 @@ export default class Calculate extends React.Component {
         </select>
         </div>
         <button onClick={this.addResistor} className="btn btn-primary">+ Add Resistor</button>
-        <button onClick={this.calculate} className="btn btn-success"> Calculate</button>
+        {/*<button onClick={this.calculate} className="btn btn-success"> Calculate</button>*/}
         <h2>{this.state.answer}</h2>
       </div>
     );
@@ -60,6 +60,7 @@ export default class Calculate extends React.Component {
     this.setState({
       resistances: l
     })
+    this.calculate();
   }
 
   calculate = () =>{
