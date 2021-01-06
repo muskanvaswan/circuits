@@ -15,7 +15,7 @@ export default class Calculate extends React.Component {
         {this.state.resistances.map((resistance, i) =>
           <div key={i} className=" d-flex form-group">
             <label htmlFor={i}  >R{i+1}</label>
-            <input name={i} value={resistance} onChange={this.handleChange} className="form-control"></input>
+            <input name={i} value={resistance} onChange={this.handleChange} onDragOver={this.dropHandler} onDrop={this.handleDrop} className="form-control"></input>
             <button data-index={i} onClick={this.deleteResistor} className="btn btn-danger">-</button>
           </div>
         )}
@@ -27,10 +27,29 @@ export default class Calculate extends React.Component {
         </div>
         <button onClick={this.addResistor} className="btn btn-primary">+ Add Resistor</button>
         {/*<button onClick={this.calculate} className="btn btn-success"> Calculate</button>*/}
-        <h2>{this.state.answer}</h2>
+        <h2 draggable onDragStart={this.dragStart}>{this.state.answer}</h2>
       </div>
     );
 	}
+  dragStart = (e) => {
+    var ans = this.state.answer;
+    console.log(ans);
+    e.dataTransfer.setData('val', ans)
+  }
+  dropHandler = (e) =>{
+    e.preventDefault();
+  }
+  handleDrop = (e) => {
+    var val = e.dataTransfer.getData('val');
+    this.setState(state => {
+      var l = state.resistances
+      l.[e.target.name]= val
+      return{resistances: l};
+
+    });
+    this.handleChange(e);
+
+  }
 
   deleteResistor = (event) => {
     const index = event.target.dataset.index
