@@ -12,18 +12,23 @@ export default class Calculate extends React.Component {
 	render() {
 		return (
       <div>
-        {this.state.resistances.map((resistance, i) =>
-          <div key={i} className=" d-flex form-group">
-            <label htmlFor={i}  >R{i+1}</label>
-            <input name={i} value={resistance} onChange={this.handleChange} onDragOver={this.dropHandler} onDrop={this.handleDrop} className="form-control"></input>
-            <button data-index={i} onClick={this.deleteResistor} className="btn btn-danger">-</button>
+        <div className="row">
+          {this.state.resistances.map((resistance, i) =>
+            <div className="col-md-4">
+            <div key={i} className=" d-flex form-group input-group border rounded bg-light ">
+              <label htmlFor={i}  className="my-auto mx-1">R{i+1}</label>
+              <input name={i} value={resistance} onChange={this.handleChange} onDragOver={this.dropHandler} onDrop={this.handleDrop} className="form-control"></input>
+              <button data-index={i} onClick={this.deleteResistor} className="btn btn-danger">-</button>
+            </div>
+            </div>
+          )}
+
+          <div className="form-group col-md-4">
+            <select value={this.state.type} name="type" onChange={this.handleSelect} className="form-control">
+              <option value="s">Series</option>
+              <option value="p">parallel</option>
+            </select>
           </div>
-        )}
-        <div className="form-group">
-        <select value={this.state.type} name="type" onChange={this.handleSelect} className="form-control">
-          <option value="s">Series</option>
-          <option value="p">parallel</option>
-        </select>
         </div>
         <button onClick={this.addResistor} className="btn btn-primary">+ Add Resistor</button>
         {/*<button onClick={this.calculate} className="btn btn-success"> Calculate</button>*/}
