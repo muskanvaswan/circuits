@@ -13,25 +13,35 @@ export default class Calculate extends React.Component {
 		return (
       <div>
         <div className="row">
-          {this.state.resistances.map((resistance, i) =>
-            <div className="col-md-4">
-            <div key={i} className=" d-flex form-group input-group border rounded bg-light ">
-              <label htmlFor={i}  className="my-auto mx-1">R{i+1}</label>
-              <input name={i} value={resistance} onChange={this.handleChange} onDragOver={this.dropHandler} onDrop={this.handleDrop} className="form-control"></input>
-              <button data-index={i} onClick={this.deleteResistor} className="btn btn-danger">-</button>
-            </div>
-            </div>
-          )}
-
-          <div className="form-group col-md-4">
+          <div className="col-md-8 row">
+            {this.state.resistances.map((resistance, i) =>
+              <div className="col-md-6">
+              <div key={i} className=" d-flex form-group input-group border rounded bg-light ">
+                <label htmlFor={i}  className="my-auto mx-1">R{i+1}</label>
+                <input name={i} value={resistance} onChange={this.handleChange} onDragOver={this.dropHandler} onDrop={this.handleDrop} className="form-control"></input>
+                <button data-index={i} onClick={this.deleteResistor} className="btn btn-danger">-</button>
+              </div>
+              </div>
+            )}
+          </div>
+          <div className="col-md-4">
+          <div className="form-group">
             <select value={this.state.type} name="type" onChange={this.handleSelect} className="form-control">
               <option value="s">Series</option>
               <option value="p">parallel</option>
             </select>
           </div>
+          </div>
         </div>
-        <button onClick={this.addResistor} className="btn btn-primary">+ Add Resistor</button>
-        {/*<button onClick={this.calculate} className="btn btn-success"> Calculate</button>*/}
+
+        <div className="row">
+          <div className="col-md-6">
+          <button onClick={this.addResistor} className="btn btn-primary w-100">+ Add Resistor</button>
+          </div>
+          <div className="col-md-6">
+            <button onClick={this.calculate} className="btn btn-success w-100"> ReCalculate</button>
+          </div>
+        </div>
         <h2 draggable onDragStart={this.dragStart}>{this.state.answer}</h2>
       </div>
     );
