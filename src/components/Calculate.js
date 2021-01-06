@@ -33,7 +33,6 @@ export default class Calculate extends React.Component {
 	}
   dragStart = (e) => {
     var ans = this.state.answer;
-    console.log(ans);
     e.dataTransfer.setData('val', ans)
   }
   dropHandler = (e) =>{
@@ -58,7 +57,7 @@ export default class Calculate extends React.Component {
       l.splice(index, 1)
       return{resistances: l};
 
-    })
+    }, this.calculate)
   }
   addResistor = () => {
     this.setState(state => ({
@@ -69,7 +68,7 @@ export default class Calculate extends React.Component {
   handleSelect = (event) => {
     this.setState({
       type: event.target.value
-    })
+    }, this.calculate)
   }
 
   handleChange = (event) => {
@@ -83,6 +82,7 @@ export default class Calculate extends React.Component {
   }
 
   calculate = () =>{
+    console.log(this.state.type)
     if (this.state.type == "p"){
       this.setState(state => ({
         answer: parallel(state.resistances)
