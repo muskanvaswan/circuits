@@ -23,7 +23,7 @@ export default class Multiple extends React.Component {
                     < Calculate />
                   </div>
                   <div className="col-md-1">
-                    <button  onClick={this.addCalculate} className="btn btn-danger w-100 h-100 text-center">-</button>
+                    <button data-index={i} onClick={this.deleteCalculate} className="btn btn-danger w-100 h-100 text-center">-</button>
                   </div>
                 </div>
               )}
@@ -41,6 +41,19 @@ export default class Multiple extends React.Component {
       count: state.count+1,
       calculates: [...state.calculates, state.count]
     }))
+  }
+
+  deleteCalculate = (e) => {
+    var index = e.target.dataset.index;
+    this.setState(state => {
+      var l = state.calculates
+      l.splice(index, 1);
+      return {
+        calculates: l,
+        count: state.count-1
+      }
+    })
+
   }
 
 
