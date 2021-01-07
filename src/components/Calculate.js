@@ -27,13 +27,13 @@ export default class Calculate extends React.Component {
 
 	render() {
 		return (
-      <div className="row container border p-3 rounded m-0">
+      <div className="row container border border-info p-3 rounded m-0">
         <div className="col-md-10">
           <div className="row">
             <div className="col-md-8 row">
               {this.state.resistances.map((resistance, i) =>
-                <div className="col-md-6">
-                  <div key={i} className=" d-flex form-group input-group border rounded bg-light ">
+                <div className="col-md-6 my-1">
+                  <div key={i} className=" d-flex border rounded bg-light w-100">
                     <label htmlFor={i}  className="my-auto mx-1">R{i+1}</label>
                     <input name={i} value={resistance} draggable onDragStart={this.dragStartResistor} onChange={this.handleChange} onDragOver={this.dropHandler} onDrop={this.handleDrop} className="form-control"></input>
                     <button data-index={i} onClick={this.deleteResistor} className="btn btn-danger">-</button>
@@ -41,7 +41,7 @@ export default class Calculate extends React.Component {
                 </div>
               )}
             </div>
-            <div className="col-md-4">
+            <div className="col-md-4 my-1">
             <div className="form-group">
               <select value={this.state.type} name="type" onChange={this.handleSelect} className="form-control">
                 <option value="s">Series</option>
@@ -53,10 +53,10 @@ export default class Calculate extends React.Component {
 
           <div className="row">
             <div className="col-md-6">
-              <button onClick={this.addResistor} className="btn btn-primary w-100">+ Add Resistor</button>
+              <button onClick={this.addResistor} className="btn btn-primary my-1 w-100">+ Add Resistor</button>
             </div>
             <div className="col-md-6">
-              <button onClick={this.calculate} className="btn btn-success w-100"> ReCalculate</button>
+              <button onClick={this.calculate} className="btn btn-success my-1 w-100"> ReCalculate</button>
             </div>
           </div>
           <div className="m-2 mt-4 d-flex">
@@ -75,11 +75,11 @@ export default class Calculate extends React.Component {
           <div className={this.state.toggle===false? null : "collapse" }>
             <div className="row my-2">
 
-              <div className="d-flex form-group col-md-3 my-3 bg-light rounded input-group">
+              <div className="d-flex form-group col-md-3 my-3 bg-light rounded input-group mr-1">
                 <label className="my-auto mx-1" htmlFor="current">Total Current</label>
                 <input name="current" onChange={this.handleCurrent} value={this.state.current} draggable  className="form-control p-2 my-auto"></input>
               </div>
-              <div className="d-flex form-group col-md-3 my-3 bg-light rounded input-group">
+              <div className="d-flex form-group col-md-3 my-3 bg-light rounded input-group mr-1">
                 <label className="my-auto mx-1" htmlFor="current">Voltage</label>
                 <input name="voltage" onChange={this.handleVoltage} value={this.state.voltage} draggable  className="form-control p-2 my-auto"></input>
               </div>
@@ -100,11 +100,11 @@ export default class Calculate extends React.Component {
           <div className={this.state.toggle===false? null : "collapse" }>
             <div className="row my-2">
 
-              <div className="d-flex form-group col-md-3 my-3 bg-light rounded input-group">
+              <div className="d-flex form-group col-md-3 my-3 bg-light rounded input-group mr-1">
                 <label className="my-auto mx-1" for="voltage">Total Volatge</label>
                 <input name="volatge" onChange={this.handleVoltage} value={this.state.voltage} draggable  className="form-control p-2 my-auto"></input>
               </div>
-              <div className="d-flex form-group col-md-3 my-3 bg-light rounded input-group">
+              <div className="d-flex form-group col-md-3 my-3 bg-light rounded input-group mr-1">
                 <label className="my-auto mx-1" for="current2">Current</label>
                 <input name="current2" onChange={this.handleCurrent} value={this.state.current} draggable  className="form-control p-2 my-auto"></input>
               </div>
