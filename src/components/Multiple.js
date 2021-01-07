@@ -17,13 +17,13 @@ export default class Multiple extends React.Component {
                 <div key="0">
                   < Calculate />
                 </div>
-              {this.state.calculates.map((i) =>
+              {this.state.calculates.map((i, j) =>
                 <div key={i} className="my-4 row">
                   <div className="col-md-11">
                     < Calculate />
                   </div>
                   <div className="col-md-1">
-                    <button data-index={i} onClick={this.deleteCalculate} className="btn btn-danger w-100 h-100 text-center">-</button>
+                    <button data-index={j} onClick={this.deleteCalculate} className="btn btn-danger w-100 h-100 text-center">-</button>
                   </div>
                 </div>
               )}
@@ -39,7 +39,7 @@ export default class Multiple extends React.Component {
   addCalculate = () => {
     this.setState(state => ({
       count: state.count+1,
-      calculates: [...state.calculates, state.count]
+      calculates: [...state.calculates, state.count+1]
     }))
   }
 
@@ -48,9 +48,11 @@ export default class Multiple extends React.Component {
     this.setState(state => {
       var l = state.calculates
       l.splice(index, 1);
+      //var nl = [...l.slice(0,index) , ...l.slice(index,).map((x) =>  x-1)]
+
       return {
         calculates: l,
-        count: state.count-1
+        //count: state.count-1
       }
     })
 
