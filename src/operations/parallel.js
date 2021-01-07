@@ -1,7 +1,7 @@
 export default function parallel(l){
   l = l.map(parseFloat)
   var ans, nl = [], b;
-  if (l.length == 2){
+  if (l.length === 2){
     ans = (l[0]*l[1])/ (l[0] + l[1]);
     return ans;
   }
