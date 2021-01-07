@@ -60,10 +60,10 @@ export default class Calculate extends React.Component {
             </div>
           </div>
           <div className="m-2 mt-4 d-flex">
-            <a onClick={this.handleToggle} className=" text-primary text-center w-100 mx-auto">
+            <p onClick={this.handleToggle} className=" text-primary text-center w-100 mx-auto">
               {this.state.toggle===false? "Hide " : "View " }
               {this.state.type==="p"? "Current Division" : "Volatge Division" }
-            </a>
+            </p>
           </div>
 
         </div>
