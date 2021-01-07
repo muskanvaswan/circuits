@@ -1,12 +1,27 @@
 import React from "react";
 import parallel from './../operations/parallel.js'
+import parallel_current from './../operations/parallel_current.js'
+import series_voltage from './../operations/series_voltage.js'
+
+
 import series from './../operations/series.js'
+// Current from './Current';
+
 
 
 export default class Calculate extends React.Component {
   constructor(props){
     super(props);
-    this.state = {"resistances": [0,0,], "type": "p", "answer":0};
+    var i = parallel_current(0, [0,0,], 0);
+    this.state = {
+      "resistances": [0,0,],
+      "type": "p",
+      "answer":0,
+      "currents": i,
+      "current": 0,
+      "volatge": 0,
+      "voltages": i
+    };
   }
 
 	render() {
@@ -44,7 +59,60 @@ export default class Calculate extends React.Component {
             </div>
           </div>
         </div>
-        <div draggable onDragStart={this.dragStartAnswer} className="col-md-2 border rounded p-4 d-flex bg-light overflow-auto"><h2   className="mx-auto">{this.state.answer}</h2></div>
+        <div draggable onDragStart={this.dragStartAnswer} className="col-md-2 border rounded p-4 d-flex bg-light overflow-auto">
+          <h2   className="mx-auto">{this.state.answer}</h2>
+        </div>
+        {/*<!-- currrent division -->*/}
+        {this.state.type==="p" && <div className="container-fluid">
+          <div>
+            <div className="row my-2">
+
+              <div className="d-flex form-group col-md-3 my-3 bg-light rounded input-group">
+                <label className="my-auto mx-1" htmlFor="current">Total Current</label>
+                <input name="current" onChange={this.handleCurrent} value={this.state.current} draggable  className="form-control p-2 my-auto"></input>
+              </div>
+              <div className="d-flex form-group col-md-3 my-3 bg-light rounded input-group">
+                <label className="my-auto mx-1" htmlFor="current">Voltage</label>
+                <input name="voltage" onChange={this.handleVoltage} value={this.state.voltage} draggable  className="form-control p-2 my-auto"></input>
+              </div>
+              {this.state.currents.map((c, i) =>
+                <div className="col-md my-3" key={i}>
+                  <div className=" border rounded p-1 d-flex bg-light overflow-auto">
+                    <p className="text-muted">I{i+1}</p>
+                    <h2   className="m-auto ">{c}</h2>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>}
+        {/*<!-- end currrent division -->*/}
+        {/*<!-- volatge division -->*/}
+        {this.state.type==="s" && <div className="container-fluid">
+          <div>
+            <div className="row my-2">
+
+              <div className="d-flex form-group col-md-3 my-3 bg-light rounded input-group">
+                <label className="my-auto mx-1" for="voltage">Total Volatge</label>
+                <input name="volatge" onChange={this.handleVoltage} value={this.state.voltage} draggable  className="form-control p-2 my-auto"></input>
+              </div>
+              <div className="d-flex form-group col-md-3 my-3 bg-light rounded input-group">
+                <label className="my-auto mx-1" for="current2">Current</label>
+                <input name="current2" onChange={this.handleCurrent} value={this.state.current} draggable  className="form-control p-2 my-auto"></input>
+              </div>
+
+              {this.state.voltages.map((c, i) =>
+                <div className="col-md my-3" key={i}>
+                  <div className=" border rounded p-1 d-flex bg-light overflow-auto">
+                    <p className="text-muted">V{i+1}</p>
+                    <h2   className="m-auto ">{c}</h2>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>}
+        {/*<!-- end voltage division -->*/}
       </div>
     );
 	}
@@ -69,6 +137,37 @@ export default class Calculate extends React.Component {
     });
     this.handleChange(e);
 
+  }
+  handleCurrent = (e) =>{
+    this.setState({
+      current: e.target.value,
+      voltage: e.target.value * this.state.answer
+    });
+    if (this.state.type==="p"){
+      this.currentCalculate();
+    }
+  }
+
+  currentCalculate = () => {
+    this.setState(state => ({
+      currents: parallel_current(state.current, state.resistances, state.answer),
+    }))
+  }
+
+  handleVoltage = (e) =>{
+    this.setState({
+      voltage: e.target.value,
+      current: e.target.value / this.state.answer
+    });
+    if (this.state.type ==="s"){
+      this.voltageCalculate();
+    }
+  }
+
+  voltageCalculate = () => {
+    this.setState(state => ({
+      voltages: series_voltage(state.voltage, state.resistances, state.answer),
+    }));
   }
 
   deleteResistor = (event) => {
@@ -103,16 +202,23 @@ export default class Calculate extends React.Component {
   }
 
   calculate = () =>{
-    if (this.state.type == "p"){
+    if (this.state.type === "p"){
       this.setState(state => ({
-        answer: parallel(state.resistances)
+        answer: parallel(state.resistances),
+        voltage: state.current*parallel(state.resistances)
       }));
+      this.currentCalculate();
+
     }
     else{
       this.setState(state => ({
-        answer: series(state.resistances)
+        answer: series(state.resistances),
+        current: state.voltage/series(state.resistances)
       }));
+      this.voltageCalculate()
+
     }
   }
+
 
 }
