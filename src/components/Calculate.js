@@ -20,7 +20,8 @@ export default class Calculate extends React.Component {
       "currents": i,
       "current": 0,
       "volatge": 0,
-      "voltages": i
+      "voltages": i,
+      "toggle": true,
     };
   }
 
@@ -52,19 +53,26 @@ export default class Calculate extends React.Component {
 
           <div className="row">
             <div className="col-md-6">
-            <button onClick={this.addResistor} className="btn btn-primary w-100">+ Add Resistor</button>
+              <button onClick={this.addResistor} className="btn btn-primary w-100">+ Add Resistor</button>
             </div>
             <div className="col-md-6">
               <button onClick={this.calculate} className="btn btn-success w-100"> ReCalculate</button>
             </div>
           </div>
+          <div className="m-2 mt-4 d-flex">
+            <a onClick={this.handleToggle} className=" text-primary text-center w-100 mx-auto">
+              {this.state.toggle===false? "Hide " : "View " }
+              {this.state.type==="p"? "Current Division" : "Volatge Division" }
+            </a>
+          </div>
+
         </div>
         <div draggable onDragStart={this.dragStartAnswer} className="col-md-2 border rounded p-4 d-flex bg-light overflow-auto">
           <h2   className="mx-auto">{this.state.answer}</h2>
         </div>
         {/*<!-- currrent division -->*/}
         {this.state.type==="p" && <div className="container-fluid">
-          <div>
+          <div className={this.state.toggle===false? null : "collapse" }>
             <div className="row my-2">
 
               <div className="d-flex form-group col-md-3 my-3 bg-light rounded input-group">
@@ -89,7 +97,7 @@ export default class Calculate extends React.Component {
         {/*<!-- end currrent division -->*/}
         {/*<!-- volatge division -->*/}
         {this.state.type==="s" && <div className="container-fluid">
-          <div>
+          <div className={this.state.toggle===false? null : "collapse" }>
             <div className="row my-2">
 
               <div className="d-flex form-group col-md-3 my-3 bg-light rounded input-group">
@@ -218,6 +226,10 @@ export default class Calculate extends React.Component {
       this.voltageCalculate()
 
     }
+  }
+
+  handleToggle = () => {
+    this.setState(state => ({toggle: !state.toggle}))
   }
 
 
