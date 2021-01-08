@@ -124,17 +124,25 @@ export default class Calculate extends React.Component {
       </div>
     );
 	}
+
+  //drag start function for equivalent resistance
   dragStartAnswer = (e) => {
     var ans = this.state.answer;
     e.dataTransfer.setData('val', ans)
   }
+
+  //drag start function for input resistance
   dragStartResistor = (e) => {
     var r = e.target.value;
     e.dataTransfer.setData('val', r)
   }
+
+  //generic drop handler
   dropHandler = (e) =>{
     e.preventDefault();
   }
+
+  //changing input resistance value after drop
   handleDrop = (e) => {
     var val = e.dataTransfer.getData('val');
     this.setState(state => {
@@ -146,6 +154,8 @@ export default class Calculate extends React.Component {
     this.handleChange(e);
 
   }
+
+  //updating state after current input
   handleCurrent = (e) =>{
     this.setState({
       current: e.target.value,
@@ -156,12 +166,14 @@ export default class Calculate extends React.Component {
     }
   }
 
+  //updating state of currents and performing current division calculations
   currentCalculate = () => {
     this.setState(state => ({
       currents: parallel_current(state.current, state.resistances, state.answer),
     }))
   }
 
+  //updating state after volatge input
   handleVoltage = (e) =>{
     this.setState({
       voltage: e.target.value,
@@ -172,12 +184,14 @@ export default class Calculate extends React.Component {
     }
   }
 
+  //updating state of voltages and performing voltage division calculations
   voltageCalculate = () => {
     this.setState(state => ({
       voltages: series_voltage(state.voltage, state.resistances, state.answer),
     }));
   }
 
+  //fucntion to handle the deleting a resistor
   deleteResistor = (event) => {
     const index = event.target.dataset.index
     this.setState(state => {
@@ -187,18 +201,22 @@ export default class Calculate extends React.Component {
 
     }, this.calculate)
   }
+
+  //fucntion to handle the adding a resistor
   addResistor = () => {
     this.setState(state => ({
       resistances: [...state.resistances, 0]
     }))
   }
 
+  //fucntion to handle changing from parallel to series
   handleSelect = (event) => {
     this.setState({
       type: event.target.value
     }, this.calculate)
   }
 
+  //fucntion to handle change in input resistance
   handleChange = (event) => {
     var index = parseInt(event.target.name)
     var l = this.state.resistances
@@ -209,6 +227,7 @@ export default class Calculate extends React.Component {
     this.calculate();
   }
 
+  //function that handles main calculations
   calculate = () =>{
     if (this.state.type === "p"){
       this.setState(state => ({
@@ -228,6 +247,7 @@ export default class Calculate extends React.Component {
     }
   }
 
+  //funtion to toggle current/voltage division
   handleToggle = () => {
     this.setState(state => ({toggle: !state.toggle}))
   }
