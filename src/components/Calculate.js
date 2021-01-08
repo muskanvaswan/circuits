@@ -56,7 +56,7 @@ export default class Calculate extends React.Component {
               <button onClick={this.addResistor} className="btn btn-primary my-1 w-100">+ Add Resistor</button>
             </div>
             <div className="col-md-6">
-              <button onClick={this.calculate} className="btn btn-success my-1 w-100"> ReCalculate</button>
+              <button onClick={this.calculate} className="btn btn-success my-1 w-100"> Recalculate</button>
             </div>
           </div>
           <div className="m-2 mt-4 d-flex">
